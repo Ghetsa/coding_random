@@ -1,7 +1,6 @@
 
-package update_item;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Scanner; 
 
 class Barang {
     //pendeklarasian
