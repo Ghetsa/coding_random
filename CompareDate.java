@@ -1,13 +1,17 @@
 import java.util.Scanner;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
-public class coba_expiry {
+public class CompareDate {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date today = new Date();
 
         String[] namaBrg = {"Sedap Goreng", "Teh Rio"};
         String[] tipeBrg = {"Makanan", "Minuman"};
-        String[] prdDate = {"22 September 2023", "23 September 2023"};
-        String[] expDate = {"23 desember 2024", "24 desember 2025"};
+        Date[] prdDate = {"22 September 2023", "23 September 2023"};
+        Date[] expDate = {"23 desember 2024", "24 desember 2025"};
         String[] dateNow = new String[5];
         String[] supplier = {"Wings", "Sayap"};
         String[] konSupp = {"08214141414", "08515151521"};
@@ -54,22 +58,54 @@ public class coba_expiry {
                 System.out.println("0. Kembali");
                 System.out.print("Pilih menu: ");
                 menu7 = input.nextInt();
+                int indeksBarangCek = -1;
+                int index = 0;
                 switch (menu7) {
                     case 1:
-                    System.out.print("Masukkan nama barang: ");
-                    namaBrg = input.next();
-                    input.nextLine();
-                    System.out.print("Masukkan tanggal yang ingin Anda cek (format: dd-MM-yyyy): ");
-                    prdDate = input.nextLine();
-                    System.out.print("Masukkan tanggal sekarang (format: dd-MM-yyyy): ");
-                    dateNow = input.nextLine();
+                            System.out.println("Daftar Barang:");
+                            for (int i = 0; i < namaBrg.length; i++) {
+                                System.out.println((i+1) +". "+namaBrg[i]);
+                            }
 
-                    if (prdDate == dateNow) {
-                        System.out.println("Tanggal sudah lewat!");
-                    } else {
-                        System.out.println("Tanggal belum lewat.");
-                    }
-                    break;
+                            System.out.print("Masukkan Nomor barang: ");
+                            int noBarangCek = input.nextInt();
+
+                            if (noBarangCek >= 1 && noBarangCek <= namaBrg.length) {
+                                index = noBarangCek - 1;
+                                if (expDate[index]) {
+                                    
+                                } else {
+                                    
+                                }
+                                System.out.println("Barang " + namaBrg[index]);
+                            } else {
+                                System.out.println("Indeks tidak valid.");
+                            }
+                            System.out.println(index);
+                            // Temukan indeks barang berdasarkan nama
+                            // for (int i = 0; i < namaBrg.length; i++) {
+                            //     if (namaBrg[i].equalsIgnoreCase(noBarangCek)) {
+                            //         indeksBarangCek = i;
+                            //         break;
+                            //     }
+                            // }
+
+                            
+                            // if (indeksBarangCek != -1) {
+                            //     try {
+                            //         Date tanggalKadaluarsa = dateFormat.parse(expDate[indeksBarangCek]);
+                            //         if (tanggalKadaluarsa.before(today)) {
+                            //             System.out.println("Tanggal kadaluarsa telah lewat!");
+                            //         } else {
+                            //             System.out.println("Tanggal kadaluarsa belum lewat.");
+                            //         }
+                            //     } catch (Exception e) {
+                            //         System.out.println("Format tanggal tidak valid.");
+                            //     }
+                            // } else {
+                            //     System.out.println("Nama barang tidak ditemukan.");
+                            // }
+                            // break;
                     case 2:
                     System.out.println("Nama Barang:");
                     case 0:
@@ -81,7 +117,7 @@ public class coba_expiry {
             //     System.out.println("!!Anda keluar dari menu!!");
             //     System.exit(0);
             //     break;
-            
+            case 8:
             int fitur8;
             do{
             System.out.println("=====Delivery=====");

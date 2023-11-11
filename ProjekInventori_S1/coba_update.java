@@ -1,38 +1,8 @@
-
-import java.util.ArrayList;
-import java.util.Scanner; 
-
-class Barang {
-    //pendeklarasian
-    private String nama;
-    private int jumlah;
-
-    //function
-    public Barang(String nama, int jumlah) {
-        this.nama = nama;
-        this.jumlah = jumlah;
-    }
-
-    public String getNama() {
-        return nama;
-    }
-
-    public int getJumlah() {
-        return jumlah;
-    }
-
-    public void setJumlah(int jumlah) {
-        this.jumlah = jumlah;
-    }
-
-    @Override
-    public String toString() {
-        return "Nama Barang: " + nama + ", Jumlah: " + jumlah;
-    }
-}
+import java.util.Scanner;
 
 public class coba_update {
-    private static ArrayList<Barang> inventaris = new ArrayList<>();
+    private static Barang[] inventaris = new Barang[10]; 
+    private static int jumlahBarang = 0;
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -67,21 +37,25 @@ public class coba_update {
     }
 
     private static void tambahBarang() {
-        System.out.print("Masukkan nama barang: ");
-        String nama = scanner.nextLine();
-        System.out.print("Masukkan jumlah barang: ");
-        int jumlah = scanner.nextInt();
-        scanner.nextLine(); // Membuang karakter newline
+        if (jumlahBarang < inventaris.length) {
+            System.out.print("Masukkan nama barang: ");
+            String nama = scanner.nextLine();
+            System.out.print("Masukkan jumlah barang: ");
+            int jumlah = scanner.nextInt();
+            scanner.nextLine(); // Membuang karakter newline
 
-        Barang barang = new Barang(nama, jumlah);
-        inventaris.add(barang);
-        System.out.println("Barang berhasil ditambahkan ke inventaris.");
+            inventaris[jumlahBarang] = new Barang(nama, jumlah);
+            jumlahBarang++;
+            System.out.println("Barang berhasil ditambahkan ke inventaris.");
+        } else {
+            System.out.println("Inventaris penuh, tidak bisa menambah barang lagi.");
+        }
     }
 
     private static void lihatInventaris() {
         System.out.println("Inventaris Gudang Supermarket:");
-        for (Barang barang : inventaris) {
-            System.out.println(barang);
+        for (int i = 0; i < jumlahBarang; i++) {
+            System.out.println(inventaris[i]);
         }
     }
 
@@ -92,14 +66,47 @@ public class coba_update {
         int jumlahBaru = scanner.nextInt();
         scanner.nextLine(); // Membuang karakter newline
 
-        for (Barang barang : inventaris) {
-            if (barang.getNama().equalsIgnoreCase(nama)) {
-                barang.setJumlah(jumlahBaru);
+        boolean barangDitemukan = false;
+        for (int i = 0; i < jumlahBarang; i++) {
+            if (inventaris[i].getNama().equalsIgnoreCase(nama)) {
+                inventaris[i].setJumlah(jumlahBaru);
                 System.out.println("Jumlah barang berhasil diupdate.");
-                return;
+                barangDitemukan = true;
+                break;
             }
         }
 
-        System.out.println("Barang tidak ditemukan dalam inventaris.");
+        if (!barangDitemukan) {
+            System.out.println("Barang tidak ditemukan dalam inventaris.");
+        }
     }
 }
+
+class Barang {
+    private String nama;
+    private int jumlah;
+
+    public Barang(String nama, int jumlah) {
+        this.nama = nama;
+        this.jumlah = jumlah;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public int getJumlah() {
+        return jumlah;
+    }
+
+    public void setJumlah(int jumlah) {
+        this.jumlah = jumlah;
+    }
+
+    @Override
+    public String toString() {
+        return "Nama Barang: " + nama + ", Jumlah: " + jumlah;
+    }
+}
+
+
