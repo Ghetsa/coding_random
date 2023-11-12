@@ -1,17 +1,16 @@
 import java.util.Scanner;
 import java.util.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class CompareDate {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException{
         Scanner input = new Scanner(System.in);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date today = new Date();
 
         String[] namaBrg = {"Sedap Goreng", "Teh Rio"};
         String[] tipeBrg = {"Makanan", "Minuman"};
-        Date[] prdDate = {"22 September 2023", "23 September 2023"};
-        Date[] expDate = {"23 desember 2024", "24 desember 2025"};
+        String[] prdDate = {"22-10-2020", "23-10-2023"};
+        String[] expDate = {"23-10-2022", "24-10-2025"};
         String[] dateNow = new String[5];
         String[] supplier = {"Wings", "Sayap"};
         String[] konSupp = {"08214141414", "08515151521"};
@@ -52,7 +51,7 @@ public class CompareDate {
                 int stop7 = 0;
                 do {
                 System.out.println("=====Expiry Date Tracking=====");
-                System.out.println("Silahkan pilih menu anda (1/0):");
+                System.out.println("Silahkan pilih menu:");
                 System.out.println("1. Cek tanggal kadaluarsa");
                 System.out.println("2. Tampilkan daftar kadaluarsa");
                 System.out.println("0. Kembali");
@@ -60,6 +59,9 @@ public class CompareDate {
                 menu7 = input.nextInt();
                 int indeksBarangCek = -1;
                 int index = 0;
+                Date today = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
                 switch (menu7) {
                     case 1:
                             System.out.println("Daftar Barang:");
@@ -70,44 +72,36 @@ public class CompareDate {
                             System.out.print("Masukkan Nomor barang: ");
                             int noBarangCek = input.nextInt();
 
+                            // Mengonversi tanggal kadaluwarsa dari string ke Date
+                            Date expDateCek = dateFormat.parse(expDate[index]);
+
                             if (noBarangCek >= 1 && noBarangCek <= namaBrg.length) {
                                 index = noBarangCek - 1;
-                                if (expDate[index]) {
-                                    
+                                //cek tanggal
+                                if (today.after(expDateCek)) {
+                                    System.out.println("Barang sudah kadaluwarsa");
                                 } else {
-                                    
+                                    System.out.println("Barang belum kadaluwarsa");
                                 }
-                                System.out.println("Barang " + namaBrg[index]);
                             } else {
                                 System.out.println("Indeks tidak valid.");
                             }
-                            System.out.println(index);
-                            // Temukan indeks barang berdasarkan nama
-                            // for (int i = 0; i < namaBrg.length; i++) {
-                            //     if (namaBrg[i].equalsIgnoreCase(noBarangCek)) {
-                            //         indeksBarangCek = i;
-                            //         break;
-                            //     }
-                            // }
-
+                            System.out.println("--------------------------------");
+                        
                             
-                            // if (indeksBarangCek != -1) {
-                            //     try {
-                            //         Date tanggalKadaluarsa = dateFormat.parse(expDate[indeksBarangCek]);
-                            //         if (tanggalKadaluarsa.before(today)) {
-                            //             System.out.println("Tanggal kadaluarsa telah lewat!");
-                            //         } else {
-                            //             System.out.println("Tanggal kadaluarsa belum lewat.");
-                            //         }
-                            //     } catch (Exception e) {
-                            //         System.out.println("Format tanggal tidak valid.");
-                            //     }
-                            // } else {
-                            //     System.out.println("Nama barang tidak ditemukan.");
-                            // }
-                            // break;
                     case 2:
-                    System.out.println("Nama Barang:");
+                        System.out.println("Daftar Barang Kadaluwarsa:");
+                        for (int i = 0; i < namaBrg.length; i++) {
+                            Date expDateDaftar = dateFormat.parse(expDate[i]);
+
+                            if (today.after(expDateDaftar)) {
+                                System.out.println((i + 1) + ". " + namaBrg[i] + "\t| " + expDate[i]+ "\t| " +  " (Kadaluwarsa)" );
+                            } else{
+                                System.out.println((i + 1) + ". " + namaBrg[i] + "\t| " + expDate[i]+ "\t| " +  " (Belum Kadaluwarsa)" );
+                            }
+                        }
+                        System.out.println("--------------------------------");
+                    break;
                     case 0:
                     break;
                 }
